@@ -55,14 +55,14 @@ struct RecipeDetailView: View {
                 VStack(alignment: .leading){
                     
                     ForEach (recipe.ingredients,id: \.self){ item in
-                        (Text(Image(systemName: "chevron.forward.circle.fill"))+Text("·  " + item))
+                        (Text(Image(systemName: "chevron.forward.circle.fill"))+Text(" " + item))
                             .font(.body)
                             .padding(1)
                             .padding(.leading, UIScreen.main.bounds.width/100*10)
                             .padding(.trailing, UIScreen.main.bounds.width/100*10)
-                    }
+                            
+                    }.frame(width: UIScreen.main.bounds.width,alignment: .leading)
                 }
-                .frame(maxWidth: .infinity)
                 }
                 
                 Divider()

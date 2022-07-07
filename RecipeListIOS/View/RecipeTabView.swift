@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RecipeTabView: View {
+    @State var tabIndex = 0
     var body: some View {
         
-        TabView{
+        TabView(selection: $tabIndex){
             VStack{
                 Text("Featured View")
             }
