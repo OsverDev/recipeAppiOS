@@ -54,8 +54,8 @@ struct RecipeDetailView: View {
                 //MARK: Ingredients Content
                 VStack(alignment: .leading){
                     
-                    ForEach (recipe.ingredients,id: \.self){ item in
-                        (Text(Image(systemName: "chevron.forward.circle.fill"))+Text(" " + item))
+                    ForEach (recipe.ingredients){ item in
+                        (Text(Image(systemName: "chevron.forward.circle.fill"))+Text(" " + item.name))
                             .font(.body)
                             .padding(1)
                             .padding(.leading, UIScreen.main.bounds.width/100*10)
