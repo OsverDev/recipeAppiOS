@@ -12,6 +12,7 @@ struct RecipeListIOSApp: App {
     var body: some Scene {
         WindowGroup {
             RecipeTabView()
+                .environmentObject(recipeLogic())
         }
     }
 }

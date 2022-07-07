@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RecipeListView: View {
-    @ObservedObject var model = recipeLogic()
-    
+   // @ObservedObject var model = recipeLogic()
+    @EnvironmentObject var model:recipeLogic
     var body: some View {
         NavigationView {
             List(model.recipes){ r in
@@ -31,6 +31,7 @@ struct RecipeListView: View {
                 
             }.navigationTitle("All Recipes")
         }
+        
     }
 }
 
