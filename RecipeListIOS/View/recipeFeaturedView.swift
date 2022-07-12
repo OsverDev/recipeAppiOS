@@ -13,25 +13,41 @@ struct recipeFeaturedView: View {
     
     var body: some View {
        // GeometryReader{ geo in
-        VStack {
-           // Text("Highlights")
+        VStack(alignment: .leading) {
+            Text("Highlights")
+                .font(.largeTitle)
+                .foregroundColor(Color.gray)
+                .padding(.leading,20)
+                .padding(.bottom,-30)
             TabView{
                     ForEach(0..<model.recipes.count){ index in
                         if model.recipes[index].featured {
-                            Image(model.recipes[index].image)
-                                .resizable()
-                                .scaledToFill()
-                                .clipped()
-                                .frame(width: UIScreen.main.bounds.width/10*9, height: UIScreen.main.bounds.height/4*3, alignment: .center)
-                                .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                .overlay {
-                                    Text(model.recipes[index].name)
-                                        .font(.title)
-                                        .foregroundColor(Color.white)
-                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                }
+                            VStack{
+                                Image(model.recipes[index].image)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .clipped()
+                                    .frame(width: UIScreen.main.bounds.width/10*9, height: UIScreen.main.bounds.height/4*3, alignment: .center)
+                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                    .overlay {
+                                        VStack{
+                                            Text(model.recipes[index].name)
+                                                .font(.title)
+                                                .foregroundColor(Color.white)
+                                                .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                                .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                                .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                            ForEach(0..<model.recipes[index].highlights.count){ index2 in
+                                                Text(model.recipes[index].highlights[index2])
+                                                    .foregroundColor(Color.white)
+                                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                            }
+                                        }
+                                    }
+
+                            }
                         }
                     }
             }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
