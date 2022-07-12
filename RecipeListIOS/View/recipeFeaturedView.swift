@@ -17,8 +17,6 @@ struct recipeFeaturedView: View {
             Text("Highlights")
                 .font(.largeTitle)
                 .foregroundColor(Color.gray)
-                .padding(.leading,20)
-                .padding(.bottom,-30)
             TabView{
                     ForEach(0..<model.recipes.count){ index in
                         if model.recipes[index].featured {
@@ -52,6 +50,12 @@ struct recipeFeaturedView: View {
                     }
             }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Adds a shadown to the bottom indiex view
+            
+            ForEach(0..<model.recipes.count){ index in
+                if model.recipes[index].featured {
+                    Text(model.recipes[index].cookTime)
+                }
+            }
         }
 
     }}
