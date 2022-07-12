@@ -13,30 +13,32 @@ struct recipeFeaturedView: View {
     
     var body: some View {
        // GeometryReader{ geo in
+        VStack {
+           // Text("Highlights")
             TabView{
-                
-                ForEach(0..<model.recipes.count){ index in
-                    if model.recipes[index].featured {
-                        Image(model.recipes[index].image)
-                            .resizable()
-                            .scaledToFill()
-                            .clipped()
-                            .frame(width: UIScreen.main.bounds.width/10*9, height: UIScreen.main.bounds.height/4*3, alignment: .center)
-                            .shadow(color: .black, radius: 10, x: 5, y: 5)
-                            .overlay {
-                                Text(model.recipes[index].name)
-                                    .font(.title)
-                                    .foregroundColor(Color.white)
-                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
-                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
-                            }
-                        
+                    ForEach(0..<model.recipes.count){ index in
+                        if model.recipes[index].featured {
+                            Image(model.recipes[index].image)
+                                .resizable()
+                                .scaledToFill()
+                                .clipped()
+                                .frame(width: UIScreen.main.bounds.width/10*9, height: UIScreen.main.bounds.height/4*3, alignment: .center)
+                                .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                .overlay {
+                                    Text(model.recipes[index].name)
+                                        .font(.title)
+                                        .foregroundColor(Color.white)
+                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                        .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                }
                             
+                                
+                        }
                     }
-                }
-            }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Adds a shadown to the bottom indiex view
+        }
 
     }}
     
