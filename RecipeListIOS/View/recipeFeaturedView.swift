@@ -32,8 +32,6 @@ struct recipeFeaturedView: View {
                                         .shadow(color: .black, radius: 10, x: 5, y: 5)
                                         .shadow(color: .black, radius: 10, x: 5, y: 5)
                                 }
-                            
-                                
                         }
                     }
             }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
