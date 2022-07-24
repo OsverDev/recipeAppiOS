@@ -55,7 +55,13 @@ struct RecipeDetailView: View {
                 VStack(alignment: .leading){
                     
                     ForEach (recipe.ingredients){ item in
-                        (Text(Image(systemName: "chevron.forward.circle.fill"))+Text(" " + item.name))
+                        HStack{
+                            if(item.num != nil && item.denom != nil){Text(item.num!.codingKey.stringValue + "/" + item.denom!.codingKey.stringValue)}else if(item.num != nil){
+                                Text(item.num!.codingKey.stringValue)
+                            }
+                            if(item.unit != nil){Text(item.unit!.codingKey.stringValue)}
+                            Text(item.name)
+                        }
                             .font(.body)
                             .padding(1)
                             .padding(.leading, UIScreen.main.bounds.width/100*10)

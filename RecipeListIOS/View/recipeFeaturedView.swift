@@ -12,7 +12,7 @@ struct recipeFeaturedView: View {
     @EnvironmentObject var model:recipeLogic
     
     var body: some View {
-       // GeometryReader{ geo in
+        
         VStack(alignment: .leading) {
             Text("Highlights")
                 .font(.largeTitle)
@@ -20,13 +20,14 @@ struct recipeFeaturedView: View {
             TabView{
                     ForEach(0..<model.recipes.count){ index in
                         if model.recipes[index].featured {
-                            VStack{
+                            LazyVStack{
+                               //$selectedIndex = index
                                 Image(model.recipes[index].image)
                                     .resizable()
                                     .scaledToFill()
                                     .clipped()
                                     .frame(width: UIScreen.main.bounds.width/10*9, height: UIScreen.main.bounds.height/4*3, alignment: .center)
-                                    .shadow(color: .black, radius: 10, x: 5, y: 5)
+                                    .shadow(color: .black, radius: 5, x: 5, y: 5)
                                     .overlay {
                                         VStack{
                                             Text(model.recipes[index].name)
@@ -44,6 +45,7 @@ struct recipeFeaturedView: View {
                                             }
                                         }
                                     }
+                                
 
                             }
                         }
@@ -51,11 +53,6 @@ struct recipeFeaturedView: View {
             }        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Adds a shadown to the bottom indiex view
             
-            ForEach(0..<model.recipes.count){ index in
-                if model.recipes[index].featured {
-                    Text(model.recipes[index].cookTime)
-                }
-            }
         }
 
     }}
