@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
+    @State var portionIndex:Int = 1
     
     var recipe:recipeStructure
     
@@ -40,27 +41,47 @@ struct RecipeDetailView: View {
             //MARK: Head ScrollView
             ScrollView{
                 
+                
+                
             // MARK: All Ingredients
                 VStack(alignment: .leading){
+                    
+                    //MARK: Portions
+                    VStack{
+                        Text("Portions")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(0)
+                            .shadow(color: Color.white, radius: 3, x: 0, y: 0)
+                            .shadow(color: Color.white, radius: 3, x: 0, y: 0)
+                        Picker("Tap Me",selection: $portionIndex){
+                            ForEach(1...10,id: \.self){ i in
+                                Text(String(i)).tag(i)
+                            }
+                        }.pickerStyle(.segmented)
+                    }.padding(.horizontal,50)
+                    
                 // MARK: Ingredients Headline
                 VStack(){
+                    
                     Text("Ingredients: ")
                         .font(.headline)
                         .foregroundColor(.blue)
                         .multilineTextAlignment(.leading)
                         .lineLimit(0)
+                        .shadow(color: Color.white, radius: 3, x: 0, y: 0)
+                        .shadow(color: Color.white, radius: 3, x: 0, y: 0)
                 }.padding(.leading,20)
                 
                 //MARK: Ingredients Content
                 VStack(alignment: .leading){
-                    
+
                     ForEach (recipe.ingredients){ item in
                         HStack{
-                            if(item.num != nil && item.denom != nil){Text(item.num!.codingKey.stringValue + "/" + item.denom!.codingKey.stringValue)}else if(item.num != nil){
-                                Text(item.num!.codingKey.stringValue)
-                            }
-                            if(item.unit != nil){Text(item.unit!.codingKey.stringValue)}
+                            Text(ingredientAmountAndUnit(item,portionIndex))
                             Text(item.name)
+                            
                         }
                             .font(.body)
                             .padding(1)
@@ -82,6 +103,8 @@ struct RecipeDetailView: View {
                     Text("Directions")
                         .font(.headline)
                         .foregroundColor(.blue)
+                        .shadow(color: Color.white, radius: 3, x: 0, y: 0)
+                        .shadow(color: Color.white, radius: 3, x: 0, y: 0)
                 }.padding(.leading,20)
                     
                 //MARK: Directions Content
@@ -111,12 +134,64 @@ struct RecipeDetailView: View {
     }
 }
 
+func ingredientAmountAndUnit (_ item: ingredients, _ portionIndex:Int) -> String {
+    var itemnum:Int = 0
+    var itemdenom:Int = 0
+    var itemUnit:String = ""
+    var isPlural:Bool = false
+    
+    if(item.num != nil){
+        itemnum = item.num!
+    }
+    itemnum = itemnum * portionIndex
+    
+    if (item.denom != nil){
+        itemdenom = item.denom!
+    }else{
+        itemdenom = itemnum
+    }
+    
+    if (item.unit != nil){
+        itemUnit = item.unit!
+    }
+    
+    var msg:String = ""
+    
+    if(itemnum.isMultiple(of: itemdenom)){
+        if(itemnum>1 && itemnum>itemdenom){
+            isPlural = true
+        }else{
+            isPlural = false
+        }
+        msg = String(itemnum/itemdenom)
+    }else{
+        if (itemnum>itemdenom){
+            isPlural = true
+            msg = String(itemnum/itemdenom) + " "
+            msg += String(itemnum % itemdenom) + "/" + String(itemdenom)
+        }else{
+            isPlural = false
+            msg += String(itemnum) + "/" + String(itemdenom)
+        }
+    }
+
+    
+    if !itemUnit.isEmpty{
+        msg += " " + itemUnit
+        if isPlural{
+            msg += "s"
+        }
+    }
+
+    return msg
+}
+
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
         //create a dummy recipe. And pass it into the detail view so we can see a preview.
         
         let model=recipeLogic()
         
-        RecipeDetailView(recipe: model.recipes[2])
+        RecipeDetailView(recipe: model.recipes[3])
     }
 }
