@@ -47,7 +47,7 @@ struct RecipeDetailView: View {
                 VStack(alignment: .leading){
                     
                     //MARK: Portions
-                    VStack{
+                    VStack(alignment: .leading){
                         Text("Portions")
                             .font(.headline)
                             .foregroundColor(.blue)
@@ -60,7 +60,8 @@ struct RecipeDetailView: View {
                                 Text(String(i)).tag(i)
                             }
                         }.pickerStyle(.segmented)
-                    }.padding(.horizontal,50)
+                            .padding(.horizontal,30)
+                    }.padding(.horizontal,20)
                     
                 // MARK: Ingredients Headline
                 VStack(){
@@ -79,8 +80,15 @@ struct RecipeDetailView: View {
 
                     ForEach (recipe.ingredients){ item in
                         HStack{
-                            Text(ingredientAmountAndUnit(item,portionIndex))
-                            Text(item.name)
+                                Text(ingredientAmountAndUnit(item,portionIndex))
+                            
+                            if((item.name=="Egg") && (item.num!*portionIndex>1)){
+                                Text(item.name+"s")
+                                    .fontWeight(.semibold)
+                            }else{
+                                Text(item.name)
+                                    .fontWeight(.semibold)
+                            }
                             
                         }
                             .font(.body)
@@ -157,14 +165,14 @@ func ingredientAmountAndUnit (_ item: ingredients, _ portionIndex:Int) -> String
     
     var msg:String = ""
     
-    if(itemnum.isMultiple(of: itemdenom)){
-        if(itemnum>1 && itemnum>itemdenom){
+    if(itemnum.isMultiple(of: itemdenom) && itemnum>0){
+        if(itemnum>1){
             isPlural = true
         }else{
             isPlural = false
         }
-        msg = String(itemnum/itemdenom)
-    }else{
+        msg = String(itemnum)
+    }else if(itemnum>0){
         if (itemnum>itemdenom){
             isPlural = true
             msg = String(itemnum/itemdenom) + " "
@@ -181,6 +189,7 @@ func ingredientAmountAndUnit (_ item: ingredients, _ portionIndex:Int) -> String
         if isPlural{
             msg += "s"
         }
+        if(itemnum>0){msg += " of"}
     }
 
     return msg
